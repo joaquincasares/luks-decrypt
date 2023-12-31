@@ -21,16 +21,22 @@ def unique_permutations(word, substitutions):
 
     return unique_results
 
-def read_file_and_parse_lists(file_path):
-    with open(file_path, "r") as file:
+def read_file_and_parse_lists(input_file_path):
+    with open(input_file_path, "r") as file:
         lines = [line.strip().split(",") for line in file]
     return lines[0][0], lines[1:]
 
+
+def write_output_file(output_path, permutations):
+    with open(output_path, "w") as file:
+        for p in permutations:
+            file.write(p + "\n")
+
 # Main script
 if __name__ == "__main__":
-    file_path = 'word.txt'
-    word, substitutions = read_file_and_parse_lists(file_path)
+    input_file_path = 'word.txt'
+    output_file_path = 'words.txt'
+    word, substitutions = read_file_and_parse_lists(input_file_path)
     permutations = unique_permutations(word, substitutions)
 
-    for p in permutations:
-        print(p)
+    write_output_file(output_file_path, permutations)

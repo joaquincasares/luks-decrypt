@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-# Check if sufficient arguments are provided
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <file_path> <command>"
-    exit 1
-fi
-
-file_path="$1"
-command="sudo cryptsetup luksOpen /dev/nvme0n1p3 my_encrypted_volume -d -"
+file_path="phrases.txt"
+device="/dev/sda3"
+# device="/dev/nvme0n1p3"
+command="sudo cryptsetup luksOpen ${device} my_encrypted_volume -"
 
 # Check if the file exists
 if [ ! -f "$file_path" ]; then
@@ -19,4 +15,10 @@ fi
 while IFS= read -r line; do
     echo "Attempting '$line'..."
     echo "$line" | $command
+    exit_status=$?
+
+    if [ $exit_status -ne 2 ]; then
+        echo "Exiting with status $exit_status"
+        break
+    fi
 done < "$file_path"

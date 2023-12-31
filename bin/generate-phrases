@@ -3,45 +3,34 @@
 from itertools import product
 import sys
 
+def generate_permutations(lists):
+    # Generate all combinations using product
+    all_combinations = product(*lists)
 
-def generate_permutations(s, replacements):
-    if not s:
-        return {""}
-    first, rest = s[0], s[1:]
-    permutations_of_rest = generate_permutations(rest, replacements)
-    permutations = set()
+    # Filter out combinations with repeated elements
+    unique_combinations = [''.join(combo) for combo in all_combinations if len(set(combo)) == len(combo)]
 
-    for permutation in permutations_of_rest:
-        if first in replacements:
-            permutations.add(replacements[first] + permutation)
-        permutations.add(first + permutation)
-
-    return permutations
-
+    return unique_combinations
 
 def read_input_file(file_path):
     with open(file_path, "r") as file:
         lines = file.readlines()
-        s = lines[0].strip()
-        replacements = {
-            line.split(",")[0]: line.split(",")[1].strip() for line in lines[1:]
-        }
-    return s, replacements
-
+        lists = [line.strip().split(",") for line in lines]
+    # Transpose and filter the lists
+    transposed = list(map(list, zip(*lists)))
+    filtered = [[item for item in sublist if item] for sublist in transposed]
+    return filtered
 
 def write_output_file(output_path, permutations):
     with open(output_path, "w") as file:
         for p in permutations:
             file.write(p + "\n")
 
-
 # Main script
 if __name__ == "__main__":
     input_file_path = 'phrase.txt'
     output_file_path = 'phrases.txt'
 
-    s, replacements = read_input_file(input_file_path)
-    permutations = generate_permutations(s, replacements)
+    lists = read_input_file(input_file_path)
+    permutations = generate_permutations(lists)
     write_output_file(output_file_path, permutations)
-
-# Example command line usage: python script_name.py input.txt output.txt
