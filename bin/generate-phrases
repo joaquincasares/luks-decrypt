@@ -14,17 +14,20 @@ def generate_permutations(lists):
 
 def read_input_file(file_path):
     with open(file_path, "r") as file:
-        lines = file.readlines()
-        lists = [line.strip().split(",") for line in lines]
-    # Transpose and filter the lists
-    transposed = list(map(list, zip(*lists)))
-    filtered = [[item for item in sublist if item] for sublist in transposed]
-    return filtered
+        # Split the file content into sections separated by "===" and strip empty lines
+        sections = file.read().strip().split("===\n")
+        # Split each section into lines and form a list of lists
+        lists = []
+        for section in sections:
+            if section.endswith("\n"):
+                section = section[:-1]
+            lists.append(section.split("\n"))
+    return lists
 
 def write_output_file(output_path, permutations):
     with open(output_path, "w") as file:
-        for p in permutations:
-            file.write(p + "\n")
+        for permutation in permutations:
+            file.write(permutation + "\n")
 
 # Main script
 if __name__ == "__main__":
