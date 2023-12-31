@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+from itertools import product
+import sys
+
+def unique_permutations(word, substitutions):
+    # Find all unique characters in the word that have substitutions
+    unique_chars = set([find for find, _ in substitutions if find in word])
+    
+    # Create a list of possible substitutions for each character in the word
+    substitution_options = [(c, [c] + [replace for find, replace in substitutions if find == c]) for c in word]
+
+    # Generate all combinations of substitutions
+    all_combinations = product(*[options for _, options in substitution_options])
+
+    # Apply each combination to the word
+    unique_results = set()
+    for combination in all_combinations:
+        permuted_word = ''.join(combination)
+        unique_results.add(permuted_word)
+
+    return unique_results
+
+def read_file_and_parse_lists(file_path):
+    with open(file_path, "r") as file:
+        lines = [line.strip().split(",") for line in file]
+    return lines[0][0], lines[1:]
+
+# Main script
+if __name__ == "__main__":
+    file_path = 'word.txt'
+    word, substitutions = read_file_and_parse_lists(file_path)
+    permutations = unique_permutations(word, substitutions)
+
+    for p in permutations:
+        print(p)

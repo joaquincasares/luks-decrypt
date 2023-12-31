@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Check if sufficient arguments are provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <file_path> <command>"
+    exit 1
+fi
+
+file_path="$1"
+command="sudo cryptsetup luksOpen /dev/nvme0n1p3 my_encrypted_volume -d -"
+
+# Check if the file exists
+if [ ! -f "$file_path" ]; then
+    echo "Error: File not found at $file_path"
+    exit 1
+fi
+
+# Read each line and pipe it into the command
+while IFS= read -r line; do
+    echo "Attempting '$line'..."
+    echo "$line" | $command
+done < "$file_path"
