@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Check if at least one argument is provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <input_file1> [<input_file2> ...]"
+    exit 1
+fi
+
+# Initialize an empty array to store base names of the files
+base_names=()
+
+# Loop over each input file to extract base names
+for input_file in "$@"; do
+    # Check if the input file exists
+    if [ ! -f "$input_file" ]; then
+        echo "Error: File not found at $input_file"
+        exit 1
+    fi
+    # Extract the base name (without the path and extension) and add to the array
+    base_name=$(basename "$input_file" .txt)
+    base_names+=("$base_name")
+done
+
+# Join the base names with '.' and append '.txt' for the output file name
+output_file="$(IFS=.; echo "./phrase/${base_names[*]}").txt"
+
+# Flag to indicate the first file
+is_first_file=true
+
+# Concatenate the contents of the files into the output file
+rm "$output_file"
+for input_file in "$@"; do
+    if [ "$is_first_file" = true ]; then
+        is_first_file=false
+    else
+        # Append separator before the content of the current file
+        # (except for the first file)
+        echo "===" >> "$output_file"
+    fi
+    cat "$input_file" >> "$output_file"
+done
+
+echo "Concatenation complete. Output saved in $output_file"

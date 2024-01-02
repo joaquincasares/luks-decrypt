@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+trap "echo Exited!; exit;" SIGINT SIGTERM
+
 # Check if at least one argument is provided
 if [ "$#" -lt 1 ]; then
     echo "Usage: $0 <file_path>"
@@ -18,8 +20,10 @@ if [ ! -f "$file_path" ]; then
 fi
 
 # Read each line and pipe it into the command
+i=1
+total=$(wc -l < "$file_path")
 while IFS= read -r line; do
-    echo "Attempting '$line'..."
+    echo "Attempt #$i of $total: $line"
     echo "$line" | $command
     exit_status=$?
 
@@ -36,4 +40,5 @@ while IFS= read -r line; do
         fi
         break
     fi
+    i=`expr $i + 1`
 done < "$file_path"

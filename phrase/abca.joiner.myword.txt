@@ -1,0 +1,15 @@
+abca
+abcx
+abxa
+abxx
+xbca
+xbcx
+xbxa
+xbxx
+===
+&
+
+===
+this
+that
+somethingelse
