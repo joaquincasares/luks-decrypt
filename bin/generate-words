@@ -19,7 +19,7 @@ def unique_permutations(word, substitutions):
         permuted_word = ''.join(combination)
         unique_results.add(permuted_word)
 
-    return unique_results
+    return sorted(unique_results)
 
 def read_file_and_parse_lists(input_file_path):
     with open(input_file_path, "r") as file:
@@ -32,10 +32,13 @@ def write_output_file(output_path, permutations):
         for p in permutations:
             file.write(p + "\n")
 
-# Main script
 if __name__ == "__main__":
-    input_file_path = 'word.txt'
-    output_file_path = 'words.txt'
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <input_file_path>")
+        sys.exit(1)
+
+    input_file_path = sys.argv[1]
+    output_file_path = input_file_path.replace("word", "words")
     word, substitutions = read_file_and_parse_lists(input_file_path)
     permutations = unique_permutations(word, substitutions)
 

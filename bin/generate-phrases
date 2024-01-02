@@ -31,8 +31,12 @@ def write_output_file(output_path, permutations):
 
 # Main script
 if __name__ == "__main__":
-    input_file_path = 'phrase.txt'
-    output_file_path = 'phrases.txt'
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <input_file_path>")
+        sys.exit(1)
+
+    input_file_path = sys.argv[1]
+    output_file_path = input_file_path.replace("phrase", "phrases")
 
     lists = read_input_file(input_file_path)
     permutations = generate_permutations(lists)

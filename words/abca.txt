@@ -1,8 +1,8 @@
-abcx
-xbca
 abca
+abcx
+abxa
+abxx
+xbca
 xbcx
 xbxa
 xbxx
-abxx
-abxa
