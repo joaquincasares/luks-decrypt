@@ -29,8 +29,7 @@ def write_output_file(output_path, permutations):
         for permutation in permutations:
             file.write(permutation + "\n")
 
-# Main script
-if __name__ == "__main__":
+def main():
     if len(sys.argv) < 2:
         print(f"Usage: {sys.argv[0]} <input_file_path>")
         sys.exit(1)
@@ -41,3 +40,6 @@ if __name__ == "__main__":
     lists = read_input_file(input_file_path)
     permutations = generate_permutations(lists)
     write_output_file(output_file_path, permutations)
+
+if __name__ == "__main__":
+    main()

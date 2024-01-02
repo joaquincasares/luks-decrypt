@@ -8,7 +8,7 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-file_path=${1}
+file_path=$1
 device="/dev/sda3"
 # device="/dev/nvme0n1p3"
 command="sudo cryptsetup luksOpen ${device} my_encrypted_volume -"

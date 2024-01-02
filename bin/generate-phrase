@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if at least one argument is provided
 if [ "$#" -lt 1 ]; then
@@ -28,16 +28,16 @@ output_file="$(IFS=.; echo "./phrase/${base_names[*]}").txt"
 is_first_file=true
 
 # Concatenate the contents of the files into the output file
-rm "$output_file"
+rm $output_file
 for input_file in "$@"; do
     if [ "$is_first_file" = true ]; then
         is_first_file=false
     else
         # Append separator before the content of the current file
         # (except for the first file)
-        echo "===" >> "$output_file"
+        echo "===" >> $output_file
     fi
-    cat "$input_file" >> "$output_file"
+    cat "$input_file" >> $output_file
 done
 
 echo "Concatenation complete. Output saved in $output_file"
