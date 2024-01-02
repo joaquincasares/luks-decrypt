@@ -1,5 +1,13 @@
 # luks-decrypt
 
+Useful if you remember part of your luks password but may be mixing up the phrase and/or certain characters.
+
+Ideally you would boot into a Linux live session without network access to generate the word and phrase files.
+
+Helped me on NYE 2023, I'm sure it will help someone else.
+
+# Usage
+
 ```bash
 # generate words from a word with possible character substitutions
 ./bin/generate-words \
@@ -19,6 +27,10 @@
 ./bin/decrypt \
     ./phrases/abca.joiner.myword.txt
 ```
+
+# File Overview
+
+## Words
 
 A word file named `abca.txt` would look something like this:
 
@@ -50,6 +62,8 @@ this
 that
 somethingelse
 ```
+
+## Phrases
 
 Phrase files collect words and separate them with a `===`:
 
